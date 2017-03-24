@@ -1,0 +1,11 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es6",
+    "outDir": "lib",
+    "module": "commonjs"
+  },
+  "include": [
+    "src"
+  ]
+}

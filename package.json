@@ -1,0 +1,32 @@
+{
+  "name": "dva-sentry",
+  "version": "0.0.1",
+  "description": "report crash in dva",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "tsc:w": "npm run tsc -- -w --sourcemap",
+    "lint": "tslint \"src/*.ts\"",
+    "pub": "rm -rf lib && npm run tsc && npm publish"
+  },
+  "keywords": [
+    "dva",
+    "sentry"
+  ],
+  "author": "jaredleechn@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "tslint": "^4.5.1"
+  },
+  "dependencies": {
+    "raven-js": "^3.12.1",
+    "typescript": "^2.2.1"
+  },
+  "peerDependencies": {
+    "dva": "^1.1.0"
+  },
+  "files": [
+    "lib"
+  ]
+}

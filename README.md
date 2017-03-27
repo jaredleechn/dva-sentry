@@ -1,5 +1,7 @@
 # dva-sentry
 
+[![NPM version](https://img.shields.io/npm/v/dva-sentry.svg?style=flat)](https://npmjs.org/package/dva-sentry)
+
 tracing action and effect, upload when an error occurs
 
 ```js

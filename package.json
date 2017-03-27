@@ -1,14 +1,17 @@
 {
   "name": "dva-sentry",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "report crash in dva",
   "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc",
-    "tsc:w": "npm run tsc -- -w --sourcemap",
+    "clean": "rm -rf src/*.js && rm -rf lib",
+    "compile:ts": "tsc",
+    "compile:babel": "babel src --out-dir lib",
+    "compile": "npm run compile:ts && npm run compile:babel",
+    "dev": "concurrently 'npm run compile:ts -- -w --sourcemap' 'npm run compile:babel -- -w'",
     "lint": "tslint \"src/*.ts\"",
-    "pub": "rm -rf lib && npm run tsc && npm publish"
+    "pub": "npm run clean && npm run compile && npm publish"
   },
   "keywords": [
     "dva",
@@ -17,6 +20,12 @@
   "author": "jaredleechn@gmail.com",
   "license": "ISC",
   "devDependencies": {
+    "babel-cli": "^6.23.0",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "concurrently": "^3.4.0",
     "tslint": "^4.5.1"
   },
   "dependencies": {
@@ -28,5 +37,15 @@
   },
   "files": [
     "lib"
-  ]
+  ],
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0"
+    ],
+    "plugins": [
+      "add-module-exports",
+      "transform-runtime"
+    ]
+  }
 }

@@ -4,7 +4,7 @@ import Raven from './sentry';
 export { Raven };
 
 export interface ICommand {
-  onReducerError?: (e: Error, traceID: string, dispatch: () => void) => void;
+  onReducerError?: (e: Error, traceID: string, dispatch: () => void, action) => void;
   onEffectError?: (e: Error, traceID: string, dispatch: () => void) => void;
   dsn: string;
   config?: {};
@@ -66,7 +66,7 @@ export default function createMiddleware(options: ICommand) {
           },
           logger: 'javascript.action',
         });
-        onReducerError(e, Raven.lastEventId(), store.dispatch);
+        onReducerError(e, Raven.lastEventId(), store.dispatch, action);
         throw e;
       }
     },

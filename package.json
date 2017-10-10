@@ -1,12 +1,13 @@
 {
   "name": "dva-sentry",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "report crash in dva",
   "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf src/*.js && rm -rf lib",
-    "compile:ts": "tsc",
+    "compile:ts": "tsc -d --declarationDir lib",
     "compile:babel": "babel src --out-dir lib",
     "compile": "npm run compile:ts && npm run compile:babel",
     "dev": "concurrently 'npm run compile:ts -- -w --sourcemap' 'npm run compile:babel -- -w'",

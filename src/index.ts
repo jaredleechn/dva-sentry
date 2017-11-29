@@ -6,6 +6,7 @@ export { Raven };
 export interface ICommand {
   onReducerError?: (e: Error, traceID: string, dispatch: () => void, action) => void;
   onEffectError?: (e: Error, traceID: string, dispatch: () => void) => void;
+  shouldThrow: boolean;
   dsn: string;
   config?: {};
   context?: {
@@ -24,6 +25,7 @@ export default function createMiddleware(options: ICommand) {
     dsn,
     config,
     context,
+    shouldThrow = true,
   } = options;
 
   Raven.config(dsn, {
@@ -67,7 +69,9 @@ export default function createMiddleware(options: ICommand) {
           logger: 'javascript.action',
         });
         onReducerError(e, Raven.lastEventId(), store.dispatch, action);
-        throw e;
+        if (shouldThrow) {
+          throw e;
+        }
       }
     },
     // onReducer: (reducer) => (state, action) => {
@@ -85,7 +89,7 @@ export default function createMiddleware(options: ICommand) {
     //   });
     //   return { ...newState, routing: newState.present.routing, ...newState.present };
     // },
-    onEffect: (effect, _, model, action) => function*(...args) {
+    onEffect: (effect, _, model, action) => function* (...args) {
       Raven.captureBreadcrumb({
         category: 'effect.start',
         message: action,
@@ -102,7 +106,9 @@ export default function createMiddleware(options: ICommand) {
         logger: 'javascript.effect',
       });
       onEffectError(e, Raven.lastEventId(), dispatch);
-      throw e;
+      if (shouldThrow) {
+        throw e;
+      }
     },
   };
 }
